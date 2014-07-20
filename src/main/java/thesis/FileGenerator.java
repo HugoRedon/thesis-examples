@@ -24,44 +24,43 @@ public class FileGenerator {
 		}		
 	}
 	
-	public HeterogeneousSubstance prepareSubstance(){
-		Cubic eos = EquationOfStateFactory.pengRobinsonBase();
-		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
-        Compound compound = new Compound("heptane");
-//       // ethanol.setName("heptane");
-//        compound.setCriticalTemperature(540.2);
-//        compound.setCriticalPressure(2.74000E+06);
-//        compound.setAcentricFactor(0.349469);
-//        
-//        compound.setEnthalpyofFormationofIdealgasat298_15Kand101325Pa(-1.87650E+08);
-//        compound.setAbsoluteEntropyofIdealGasat298_15Kand101325Pa(-2.24050E+08);
-//        
-//        compound.setA_dippr107Cp(1.2015E+05);
-//        compound.setB_dippr107Cp(4.0010E+05);
-//        compound.setC_dippr107Cp(1.6766E+03);
-//        compound.setD_dippr107Cp(2.7400E+05);
-//        compound.setE_dippr107Cp(7.5640E+02);
-//        
-//        
-//        Eqn101VaporPressure eqn = new Eqn101VaporPressure();
-//        eqn.setA(109.69);
-//        eqn.setB(-7941.7);
-//        eqn.setC(-13.213);
-//        eqn.setD(0.000010176);
-//        eqn.setE(2);
-//        
-//        eqn.setMinTemperature(182.57);
-//        eqn.setMaxTemperature(540.2);
-//        compound.setEqn101VaporPressure(eqn);
-        
+	protected Compound getMethanol(){
+		Compound compound = new Compound("methanol");
+		//from chemsep
+		compound.setCriticalTemperature(512.64);
+		compound.setCriticalPressure(8097000);
+		compound.setAcentricFactor(0.565);
+		
+        compound.setEnthalpyofFormationofIdealgasat298_15Kand101325Pa(-2.0094E+08);
+	    compound.setAbsoluteEntropyofIdealGasat298_15Kand101325Pa(239880);
+		
+		 Eqn101VaporPressure eqn = new Eqn101VaporPressure();
+	      //chempsep
+	      eqn.setA(123.6);
+	      eqn.setB(-8660);
+	      eqn.setC(-15.101);
+	      eqn.setD(0.000013034);
+	      eqn.setE(2);
+	      
+	      eqn.setMinTemperature(175.47);
+	      eqn.setMaxTemperature(512.64);
+	      //chempsep
+	      compound.setEqn101VaporPressure(eqn);
+	      
+	      fillExperimentalListWithEqn101(compound);
+	      return compound;
+		
+	}
+	
+	
+	protected Compound getWater(){
+		 Compound compound = new Compound("water");
+
         //chempsep
         compound.setCriticalTemperature(647.14);
         compound.setCriticalPressure(2.2064E+07);
         compound.setAcentricFactor(0.344);
-        
-        
-        
-        
+
         compound.setEnthalpyofFormationofIdealgasat298_15Kand101325Pa(-2.41814E+08);
 	      compound.setAbsoluteEntropyofIdealGasat298_15Kand101325Pa(188724);
 	      //chempsep
@@ -86,13 +85,17 @@ public class FileGenerator {
 	      eqn.setMaxTemperature(647.29);
 	      //chempsep
 	      compound.setEqn101VaporPressure(eqn);
-        
-        
-    	List<ExperimentalData> list = new ArrayList();
+	      
+	      fillExperimentalListWithEqn101(compound);
+	      
+	      return compound;
+	}
+	public void fillExperimentalListWithEqn101(Compound compound){
+		List<ExperimentalData> list = new ArrayList();
     	ExperimentalDataList dataList = new ExperimentalDataList();
     	dataList.setName("Con ecuación 101");
     	dataList.setSource("base de datos ChemSep");
-    	
+    	Eqn101VaporPressure eqn = compound.getEqn101VaporPressure();
     	
 		double min = eqn.getMinTemperature();
 		double max = eqn.getMaxTemperature();
@@ -109,8 +112,19 @@ public class FileGenerator {
 		
 		dataList.setList(list);
 		compound.getExperimentalLists().add(dataList);
-        
-        
+	}
+	
+	
+	
+	
+	
+	
+	
+	public HeterogeneousSubstance prepareSubstance(){
+		Cubic eos = EquationOfStateFactory.pengRobinsonBase();
+		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
+       
+        Compound compound = getWater();
 		
 		HeterogeneousSubstance substance = new HeterogeneousSubstance(eos, alpha, compound);
 		return substance;

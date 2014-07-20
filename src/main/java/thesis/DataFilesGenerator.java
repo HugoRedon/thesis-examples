@@ -2,6 +2,7 @@ package thesis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -42,19 +43,28 @@ public class DataFilesGenerator {
 		alphaGen.alphaOptimization2variableFile("/home/hugo/Documents/repositories/MateriaLatex/plotdata/alphaOptimization/");
 	}
 	
+	public void generateBinaryOptimizationChapterFiles() throws IOException{
+		BinaryOptimizationFileGenerator binaryGen = new BinaryOptimizationFileGenerator();
+		
+		binaryGen.generateFiles("/home/hugo/Documents/repositories/MateriaLatex/plotdata/binaryOptim/");
+	}
+	
 	public static void main(String... args){
 		DataFilesGenerator generator = new DataFilesGenerator();
 		try {
 			
 //			generator.generateCubicChapterFiles();
-			generator.generateEnthalpyChapterFiles();
-			generator.generateOptimizationChapterFiles();
-			
+			//generator.generateEnthalpyChapterFiles();
+			//generator.generateOptimizationChapterFiles();
+			generator.generateBinaryOptimizationChapterFiles();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
