@@ -59,8 +59,8 @@ public class CompoundReader {
                 components.add(component(item));
                
            }
-            System.out.println("compounds found: " +list.getLength());
-            System.out.println("document" + document.getXmlVersion());
+//            System.out.println("compounds found: " +list.getLength());
+//            System.out.println("document" + document.getXmlVersion());
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(CompoundReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,14 +84,14 @@ public class CompoundReader {
         
         
         String value = stringProperty(propertyName, el);
-        System.out.println("value: " + value);
+//        System.out.println("value: " + value);
         return Double.valueOf(value);
     }
     
     public Compound component(Node node){
         Element el = (Element)node;
         String name = stringProperty("CompoundID", el);
-        System.out.println("name: " + name);
+//        System.out.println("name: " + name);
         double ct = numberProperty("CriticalTemperature",el);
         double cp = numberProperty("CriticalPressure",el);
         double cv = numberProperty("CriticalVolume", el);
