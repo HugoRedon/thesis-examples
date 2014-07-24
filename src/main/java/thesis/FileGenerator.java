@@ -8,7 +8,7 @@ import termo.component.Compound;
 import termo.data.ExperimentalData;
 import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
-import termo.eos.EquationOfStateFactory;
+import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
 import termo.eos.alpha.AlphaFactory;
 import termo.equations.Eqn101VaporPressure;
@@ -121,7 +121,7 @@ public class FileGenerator {
 	
 	
 	public HeterogeneousSubstance prepareSubstance(){
-		Cubic eos = EquationOfStateFactory.pengRobinsonBase();
+		Cubic eos = EquationsOfState.pengRobinson();
 		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
        
         Compound compound = getWater();

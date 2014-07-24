@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import termo.eos.Cubic;
-import termo.eos.EquationOfStateFactory;
+import termo.eos.EquationsOfState;
 import termo.phase.Phase;
 
 public class CubicFileGenerator extends FileGenerator {
@@ -71,7 +71,7 @@ public void cubicEquationCompresibilitiFactorFiles(String folderName) throws Fil
 			directory.mkdir();
 		}
 		
-		Cubic cubic = EquationOfStateFactory.vanDerWaals();
+		Cubic cubic = EquationsOfState.vanDerWaals();
 		
 		double min_reducedPressure = 0.1;
 		double max_reducedPressure= 7;
@@ -96,8 +96,6 @@ public void cubicEquationCompresibilitiFactorFiles(String folderName) throws Fil
 				double B = cubic.get_B(temperature, pressure, b);
 				
 				double z =cubic.calculateCompresibilityFactor(A, B, Phase.LIQUID);
-				
-				
 				writer.println(" " + reducedPressure + " " + z);
 			}
 			writer.close();

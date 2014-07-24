@@ -37,6 +37,7 @@ public class CompoundReader {
     	}
 		for(Compound compound: components){
 			if(compound.getName().equals(name.toLowerCase())){
+				System.out.println("Compound found" + name);
 				return compound;
 			}
 		}

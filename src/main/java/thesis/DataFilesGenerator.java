@@ -13,7 +13,7 @@ import termo.component.Compound;
 import termo.data.ExperimentalData;
 import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
-import termo.eos.EquationOfStateFactory;
+import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
 import termo.eos.alpha.AlphaFactory;
 import termo.equations.Eqn101VaporPressure;
@@ -49,6 +49,13 @@ public class DataFilesGenerator {
 		binaryGen.generateFiles("/home/hugo/Documents/repositories/MateriaLatex/plotdata/binaryOptim/");
 	}
 	
+	public void generateTernaryDiagramsChapterDataFiles() throws IOException{
+		TernaryDiagram ternary = new TernaryDiagram();
+		
+		ternary.generateTernaryDataFiles("/home/hugo/Documents/repositories/MateriaLatex/plotdata/ternaryDiagram/");
+	}
+	
+	
 	public static void main(String... args){
 		DataFilesGenerator generator = new DataFilesGenerator();
 		try {
@@ -56,7 +63,8 @@ public class DataFilesGenerator {
 //			generator.generateCubicChapterFiles();
 			//generator.generateEnthalpyChapterFiles();
 			//generator.generateOptimizationChapterFiles();
-			generator.generateBinaryOptimizationChapterFiles();
+			//generator.generateBinaryOptimizationChapterFiles();
+			generator.generateTernaryDiagramsChapterDataFiles();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

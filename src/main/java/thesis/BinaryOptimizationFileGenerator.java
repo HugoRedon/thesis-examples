@@ -23,7 +23,7 @@ import termo.data.ExperimentalDataBinaryList;
 import termo.data.ExperimentalDataBinaryType;
 import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
-import termo.eos.EquationOfStateFactory;
+import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
 import termo.eos.alpha.AlphaFactory;
 import termo.eos.mixingRule.MixingRule;
@@ -35,10 +35,10 @@ import termo.optimization.ErrorData;
 import termo.optimization.errorfunctions.TemperatureMixtureErrorData;
 import compounds.CompoundReader;
 
-public class BinaryOptimizationFileGenerator extends FileGenerator{
+public class BinaryOptimizationFileGenerator extends FileGenerator {
 	
 	public void generateFiles(String folderName) throws IOException{
-		methanolWaterFiles(folderName+ "methanolWater/");
+		//methanolWaterFiles(folderName+ "methanolWater/");
 		carbonDioxideMethanolFiles(folderName+"co2Met/");
 	}
 	
@@ -118,7 +118,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator{
 	public void carbonDioxideMethanolFiles(String folderName) throws IOException{
 		prepareFolder(folderName);
 		ExperimentalDataBinaryList blist = getBinaryExperimentalListFromFilePxy("/home/hugo/Documents/repositories/MateriaLatex/data/co2Met25.dat");
-		Cubic eos= EquationOfStateFactory.pengRobinsonBase();
+		Cubic eos= EquationsOfState.pengRobinson();
 		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
 		NRTLActivityModel activityModel = new NRTLActivityModel();
 		MixingRule mr = new WongSandlerMixingRule(activityModel, eos);
@@ -153,7 +153,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator{
 		k.getAlpha().setValue(methanol, carbonDioxide, 0.3);
 		
 		k.getK().setSymmetric(true);
-		k.getK().setValue(carbonDioxide, methanol, -0.3972 );
+		k.getK().setValue(carbonDioxide, methanol, 0.3972 );
 		
 		
 		
@@ -179,9 +179,9 @@ public class BinaryOptimizationFileGenerator extends FileGenerator{
 		System.out.println("A21: " + A21);
 
 		
-		double B12 =k.getA().getValue(carbonDioxide, methanol);
+		double B12 =k.getB().getValue(carbonDioxide, methanol);
 		System.out.println("B12: " + B12);
-		double B21 =k.getA().getValue( methanol,carbonDioxide);
+		double B21 =k.getB().getValue( methanol,carbonDioxide);
 		System.out.println("B21: " + B21);
 		
 		
@@ -250,7 +250,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator{
 		ExperimentalDataBinaryList blist = getBinaryExperimentalListFromFileTxy("/home/hugo/Documents/repositories/MateriaLatex/data/binary.dat");
 		List<ExperimentalDataBinary> list = blist.getList(); 
 		
-		Cubic eos = EquationOfStateFactory.pengRobinsonBase();
+		Cubic eos = EquationsOfState.pengRobinson();
 		Alpha alpha = AlphaFactory.getStryjekAndVeraExpression();
 		MixingRule mixingRule = new VDWMixingRule();
 		Compound water = blist.getNonReferenceComponent();
