@@ -15,7 +15,7 @@ import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
-import termo.eos.alpha.AlphaFactory;
+import termo.eos.alpha.Alphas;
 import termo.equations.Eqn101VaporPressure;
 import termo.matter.HeterogeneousSubstance;
 import termo.optimization.ErrorData;

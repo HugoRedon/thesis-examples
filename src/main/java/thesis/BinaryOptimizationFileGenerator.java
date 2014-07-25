@@ -25,7 +25,7 @@ import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
-import termo.eos.alpha.AlphaFactory;
+import termo.eos.alpha.Alphas;
 import termo.eos.mixingRule.MixingRule;
 import termo.eos.mixingRule.VDWMixingRule;
 import termo.eos.mixingRule.WongSandlerMixingRule;
@@ -119,7 +119,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator {
 		prepareFolder(folderName);
 		ExperimentalDataBinaryList blist = getBinaryExperimentalListFromFilePxy("/home/hugo/Documents/repositories/MateriaLatex/data/co2Met25.dat");
 		Cubic eos= EquationsOfState.pengRobinson();
-		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
+		Alpha alpha = Alphas.getPengAndRobinsonExpression();
 		NRTLActivityModel activityModel = new NRTLActivityModel();
 		MixingRule mr = new WongSandlerMixingRule(activityModel, eos);
 		
@@ -251,7 +251,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator {
 		List<ExperimentalDataBinary> list = blist.getList(); 
 		
 		Cubic eos = EquationsOfState.pengRobinson();
-		Alpha alpha = AlphaFactory.getStryjekAndVeraExpression();
+		Alpha alpha = Alphas.getStryjekAndVeraExpression();
 		MixingRule mixingRule = new VDWMixingRule();
 		Compound water = blist.getNonReferenceComponent();
 		Compound methanol = blist.getReferenceComponent();

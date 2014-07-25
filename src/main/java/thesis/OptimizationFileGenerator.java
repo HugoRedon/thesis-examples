@@ -11,7 +11,7 @@ import termo.data.ExperimentalData;
 import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
 import termo.eos.alpha.Alpha;
-import termo.eos.alpha.AlphaFactory;
+import termo.eos.alpha.Alphas;
 import termo.matter.HeterogeneousSubstance;
 import termo.optimization.ErrorData;
 import termo.optimization.Parameters_Error;
@@ -24,7 +24,7 @@ public class OptimizationFileGenerator extends FileGenerator{
 		PrintWriter writer = new PrintWriter(folderName + "error.dat","UTF-8");
 		writer.println(" temperature exppressure calcpressure error");
 		HeterogeneousSubstance substance = prepareSubstance();
-		substance.setAlpha(AlphaFactory.getSoave2Parameters());
+		substance.setAlpha(Alphas.getSoave2Parameters());
 		Set<ExperimentalDataList> set =(Set<ExperimentalDataList>)substance.getComponent().getExperimentalLists();
 		List<ExperimentalData> list = ((ExperimentalDataList)set.iterator().next()).getList();
 		substance.getErrorFunction().setExperimental(list);

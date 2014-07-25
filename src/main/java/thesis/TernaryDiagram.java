@@ -23,7 +23,7 @@ import termo.data.ExperimentalDataBinaryType;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
-import termo.eos.alpha.AlphaFactory;
+import termo.eos.alpha.Alphas;
 import termo.eos.mixingRule.MixingRule;
 import termo.eos.mixingRule.VDWMixingRule;
 import termo.eos.mixingRule.WongSandlerMixingRule;
@@ -81,7 +81,7 @@ public class TernaryDiagram extends FileGenerator {
 		
 		
 		Cubic eos = EquationsOfState.pengRobinson();
-		Alpha alpha = AlphaFactory.getPengAndRobinsonExpression();
+		Alpha alpha = Alphas.getPengAndRobinsonExpression();
 		
 		
 		optimizeAlphaExpression(ethylene, alpha,
