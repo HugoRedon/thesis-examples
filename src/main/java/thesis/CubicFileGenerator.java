@@ -85,10 +85,13 @@ public void cubicEquationCompresibilitiFactorFiles(String folderName) throws Fil
 		
 		double a = 3107000.0;
 		double b = 0.2049;
-		int count = 1;
+	
+		
+		PrintWriter writer= new PrintWriter(folderName + "pz_temp.dat", "UTF-8");
+		writer.println(" p z rt");
+		
 		for(double reducedTemperature = min_reducedTemperature; reducedTemperature <= max_reducedTemperature; reducedTemperature +=0.1){
-			PrintWriter writer= new PrintWriter(folderName + "pz_temp_" +count+++ ".dat", "UTF-8");
-			writer.println(" p z");
+			
 			for(double reducedPressure = min_reducedPressure ; reducedPressure <= max_reducedPressure; reducedPressure+= pressurepass){	
 				double temperature = criticalTemperature * reducedTemperature;
 				double pressure = criticalPressure * reducedPressure;
@@ -96,11 +99,12 @@ public void cubicEquationCompresibilitiFactorFiles(String folderName) throws Fil
 				double B = cubic.get_B(temperature, pressure, b);
 				
 				double z =cubic.calculateCompresibilityFactor(A, B, Phase.LIQUID);
-				writer.println(" " + reducedPressure + " " + z);
+				writer.println(" " + reducedPressure + " " + z + " " + reducedTemperature);
 			}
-			writer.close();
+			writer.println();
+			
 		}
-		
+		writer.close();
 	
 	}
 	

@@ -26,8 +26,8 @@ public class DataFilesGenerator {
 	
 	public void generateCubicChapterFiles() throws FileNotFoundException, UnsupportedEncodingException{
 		CubicFileGenerator cubicGen = new CubicFileGenerator();
-		cubicGen.cubicEquationPressureVolumeFile("/home/hugo/Documents/repositories/MateriaLatex/plotdata/pressurevolume.dat");
-		cubicGen.cubicEquationPressureVolumeTemperatureFile("/home/hugo/Documents/repositories/MateriaLatex/plotdata/pressurevolumetemperature.dat");
+		//cubicGen.cubicEquationPressureVolumeFile("/home/hugo/Documents/repositories/MateriaLatex/plotdata/pressurevolume.dat");
+		//cubicGen.cubicEquationPressureVolumeTemperatureFile("/home/hugo/Documents/repositories/MateriaLatex/plotdata/pressurevolumetemperature.dat");
 		cubicGen.cubicEquationCompresibilitiFactorFiles("/home/hugo/Documents/repositories/MateriaLatex/plotdata/compresibilitiChart/");
 	}
 	public void generateEnthalpyChapterFiles () throws FileNotFoundException, UnsupportedEncodingException{
@@ -60,11 +60,11 @@ public class DataFilesGenerator {
 		DataFilesGenerator generator = new DataFilesGenerator();
 		try {
 			
-//			generator.generateCubicChapterFiles();
+			generator.generateCubicChapterFiles();
 			//generator.generateEnthalpyChapterFiles();
 			//generator.generateOptimizationChapterFiles();
 			//generator.generateBinaryOptimizationChapterFiles();
-			generator.generateTernaryDiagramsChapterDataFiles();
+//			generator.generateTernaryDiagramsChapterDataFiles();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
