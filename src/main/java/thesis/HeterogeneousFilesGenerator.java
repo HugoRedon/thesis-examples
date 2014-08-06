@@ -48,7 +48,7 @@ public class HeterogeneousFilesGenerator extends FileGenerator{
 		HeterogeneousMixture mix = prepareWaterMethanolMixture(blist);
 		
 		for(Compound compound: mix.getComponents()){
-			optimizeAlpha(mix, compound);
+			optimizeAlphaForMixture(mix, compound);
 		}
 		mix.getErrorfunction().getOptimizer().setApplyErrorDecreaseTechnique(true);
 		mix.getErrorfunction().minimize();

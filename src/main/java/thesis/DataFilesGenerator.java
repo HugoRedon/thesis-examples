@@ -74,6 +74,12 @@ public class DataFilesGenerator {
 		het.generateBinaryEquilibriaFile(repoPath + "plotdata/mixhet/");
 	}
 	
+	public void generateFugacityFiles()throws IOException{
+		FugacityFileGenerator fug = new FugacityFileGenerator();
+		fug.generateFugacityDiagram(repoPath + "plotdata/fugacity/");
+		fug.generateFugacity3dDiagram(repoPath + "plotdata/fugacity/");
+	}
+	
 	public static void main(String... args){
 		DataFilesGenerator generator = new DataFilesGenerator();
 		try {
@@ -85,7 +91,8 @@ public class DataFilesGenerator {
 //			generator.generateTernaryDiagramsChapterDataFiles();
 			//generator.generateEntropyDiagrams();
 			//generator.generateGibbsDiagrams();
-			generator.generateHeterogeneousFiles();
+			//generator.generateHeterogeneousFiles();
+			generator.generateFugacityFiles();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

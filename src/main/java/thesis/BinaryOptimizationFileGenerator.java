@@ -246,7 +246,7 @@ public class BinaryOptimizationFileGenerator extends FileGenerator {
 		
 		HeterogeneousSubstance substance =createSubstanceForComponent(mix, compound);
 		printAlphaOptimization(substance, folderPath, fileNameWithouthExtension + ".dat");
-		optimizeAlpha(mix, compound);
+		optimizeAlphaForMixture(mix, compound);
 		printAlphaOptimization(substance, folderPath, fileNameWithouthExtension + "AfterOptim.dat");
 		
 		

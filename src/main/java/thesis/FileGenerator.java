@@ -212,11 +212,12 @@ public class FileGenerator {
 		return substance;
 	}
 	
-	public void optimizeAlpha(HeterogeneousMixture mix, Compound compound){
+	public void optimizeAlphaForMixture(HeterogeneousMixture mix, Compound compound){
 		HeterogeneousSubstance substance = createSubstanceForComponent(mix, compound);
 
 		substance.getErrorFunction().getOptimizer().setApplyErrorDecreaseTechnique(true);
 		substance.getErrorFunction().minimize();
 	}
+	
 	
 }
