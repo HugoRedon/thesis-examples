@@ -1,17 +1,29 @@
 package thesis;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import termo.binaryParameter.InteractionParameter;
 import termo.component.Compound;
 import termo.data.ExperimentalData;
+import termo.data.ExperimentalDataBinary;
+import termo.data.ExperimentalDataBinaryList;
 import termo.data.ExperimentalDataList;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
 import termo.eos.alpha.Alphas;
+import termo.eos.mixingRule.MixingRule;
+import termo.eos.mixingRule.VDWMixingRule;
 import termo.equations.Eqn101VaporPressure;
+import termo.matter.HeterogeneousMixture;
 import termo.matter.HeterogeneousSubstance;
 
 public class FileGenerator {
@@ -129,4 +141,82 @@ public class FileGenerator {
 		HeterogeneousSubstance substance = new HeterogeneousSubstance(eos, alpha, compound);
 		return substance;
 	}
+	
+	
+	public HeterogeneousMixture prepareWaterMethanolMixture(ExperimentalDataBinaryList blist) throws IOException{
+		
+		List<ExperimentalDataBinary> list = blist.getList(); 
+		
+		Cubic eos = EquationsOfState.pengRobinson();
+		Alpha alpha = Alphas.getStryjekAndVeraExpression();
+		MixingRule mixingRule = new VDWMixingRule();
+		Compound water = blist.getNonReferenceComponent();
+		Compound methanol = blist.getReferenceComponent();
+		
+		
+		
+		Set<Compound> compounds =new HashSet();
+		compounds.add(water);
+		compounds.add(methanol);
+		
+		InteractionParameter k = new InteractionParameter();
+		k.setSymmetric(true);
+		HeterogeneousMixture mix = new HeterogeneousMixture(eos, alpha, mixingRule, compounds, k);
+		mix.getErrorfunction().setReferenceComponent(methanol);
+		mix.getErrorfunction().setNonReferenceComponent(water);
+		mix.getErrorfunction().setExperimental(list);
+		
+		return mix;
+	}
+	
+	public ExperimentalDataBinaryList getBinaryExperimentalListFromFileTxy(String filePath) throws IOException{
+		Path path = Paths.get(filePath);
+		List<String> lines =Files.readAllLines(path);
+		
+		ExperimentalDataBinaryList blist = new ExperimentalDataBinaryList();
+		blist.setName("Ejemplo");
+		
+		
+		double pressure = Double.valueOf(lines.get(0).split("\\s+")[1]);
+
+		List<ExperimentalDataBinary> list = new ArrayList();
+		
+		for(String line: lines){
+			 String[] lineWords = line.split("\\s+");
+			 
+			 System.out.println(line);
+			 
+			 try{
+				 double temperature =Double.valueOf( lineWords[0]);
+				 double x =Double.valueOf( lineWords[1]);
+				 double y=Double.valueOf( lineWords[2]);
+				 
+				 ExperimentalDataBinary data = new ExperimentalDataBinary(temperature, pressure, x, y);
+				 list.add(data);
+			 }catch(Exception ex){
+				 System.out.println("Linea sin datos");
+			 }
+			 
+		}
+		blist.setReferenceComponent(getMethanol());
+		blist.setNonReferenceComponent(getWater());
+		blist.setList(list);
+		return blist;
+	}
+	
+	public HeterogeneousSubstance createSubstanceForComponent(HeterogeneousMixture mix, Compound compound){
+		Cubic eos = mix.getEquationOfState();
+		Alpha alpha = mix.getAlpha();
+		HeterogeneousSubstance substance = new HeterogeneousSubstance(eos,alpha,compound);
+		substance.getErrorFunction().setExperimental(compound.getExperimentalLists().iterator().next().getList());
+		return substance;
+	}
+	
+	public void optimizeAlpha(HeterogeneousMixture mix, Compound compound){
+		HeterogeneousSubstance substance = createSubstanceForComponent(mix, compound);
+
+		substance.getErrorFunction().getOptimizer().setApplyErrorDecreaseTechnique(true);
+		substance.getErrorFunction().minimize();
+	}
+	
 }
