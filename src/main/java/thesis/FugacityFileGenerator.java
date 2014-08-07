@@ -53,10 +53,11 @@ public class FugacityFileGenerator extends FileGenerator{
 			}
 			writer.close();
 			
-			
+			Integer nl= 25;
+			pressureStep = (maxPressure-minPressure)/nl.doubleValue();
 			PrintWriter wri = new PrintWriter(folderName + "linefug3d.dat");
 			wri.println(" fug temperature pressure");
-			for(Integer i = 0; i < n ; i++){
+			for(Integer i = 0; i < nl ; i++){
 				Double pressure = minPressure + i.doubleValue()* pressureStep;
 				substance.setPressure(pressure);
 				substance.bubbleTemperature();

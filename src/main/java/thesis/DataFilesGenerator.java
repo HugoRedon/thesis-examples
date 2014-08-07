@@ -80,6 +80,10 @@ public class DataFilesGenerator {
 		fug.generateFugacity3dDiagram(repoPath + "plotdata/fugacity/");
 	}
 	
+	public void generateVolumeFiles()throws IOException{
+		VolumeFileGenerator vol = new VolumeFileGenerator();
+		vol.generateDiagram(repoPath + "plotdata/volume/");
+	}
 	public static void main(String... args){
 		DataFilesGenerator generator = new DataFilesGenerator();
 		try {
@@ -92,8 +96,8 @@ public class DataFilesGenerator {
 			//generator.generateEntropyDiagrams();
 			//generator.generateGibbsDiagrams();
 			//generator.generateHeterogeneousFiles();
-			generator.generateFugacityFiles();
-			
+			//generator.generateFugacityFiles();
+			generator.generateVolumeFiles();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
