@@ -27,8 +27,8 @@ public class DataFilesGenerator {
 	
 	public void generateCubicChapterFiles() throws FileNotFoundException, UnsupportedEncodingException{
 		CubicFileGenerator cubicGen = new CubicFileGenerator();
-		//cubicGen.cubicEquationPressureVolumeFile(repoPath + "plotdata/pressurevolume.dat");
-		//cubicGen.cubicEquationPressureVolumeTemperatureFile(repoPath +"plotdata/pressurevolumetemperature.dat");
+		cubicGen.cubicEquationPressureVolumeFile(repoPath + "plotdata/pressurevolume.dat");
+		cubicGen.cubicEquationPressureVolumeTemperatureFile(repoPath +"plotdata/pressurevolumetemperature.dat");
 		cubicGen.cubicEquationCompresibilitiFactorFiles(repoPath + "plotdata/compresibilitiChart/");
 	}
 	public void generateEnthalpyChapterFiles () throws FileNotFoundException, UnsupportedEncodingException{

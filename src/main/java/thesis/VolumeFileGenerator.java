@@ -5,11 +5,26 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import compounds.CompoundReader;
+
+import termo.component.Compound;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
+import termo.eos.alpha.Alphas;
+import termo.matter.Substance;
 import termo.phase.Phase;
 
 public class VolumeFileGenerator extends FileGenerator{
+	Substance substance;
+	
+	public VolumeFileGenerator(){
+		CompoundReader reader = new CompoundReader();
+		Compound heptane = reader.getCompoundByExactName("N-heptane");
+		substance = new Substance(EquationsOfState.vanDerWaals()
+				,Alphas.getVanDerWaalsIndependent()
+				,heptane,Phase.LIQUID);
+	}
+	
 	public void generateDiagram(String folderName) throws FileNotFoundException, UnsupportedEncodingException{
 		File directory = new File(folderName);
 		if(!directory.exists()){
@@ -25,12 +40,11 @@ public class VolumeFileGenerator extends FileGenerator{
 		double min_reducedTemperature= 1 ;
 		double max_reducedTemperature=2;
 		
-		double criticalTemperature = 540.2;
-		double criticalPressure = 2.74000E+06;
-		double criticalVolume=0.428;
+		double criticalTemperature = substance.getComponent().getCriticalTemperature();
+		double criticalPressure = substance.getComponent().getCriticalPressure();
+		double criticalVolume=substance.getComponent().getCriticalVolume();
 		
-		double a = 3107000.0;
-		double b = 0.2049;
+
 	
 		
 		PrintWriter writer= new PrintWriter(folderName + "pz_vr.dat", "UTF-8");
@@ -41,11 +55,12 @@ public class VolumeFileGenerator extends FileGenerator{
 			for(double reducedPressure = min_reducedPressure ; reducedPressure <= max_reducedPressure; reducedPressure+= pressurepass){	
 				double temperature = criticalTemperature * reducedTemperature;
 				double pressure = criticalPressure * reducedPressure;
-				double A =cubic.get_A(temperature, pressure, a);
-				double B = cubic.get_B(temperature, pressure, b);
+				substance.setTemperature(temperature);
+				substance.setPressure(pressure);
 				
-				double z =cubic.calculateCompresibilityFactor(A, B, Phase.LIQUID);
-				double volume = cubic.calculateVolume(temperature, pressure, z);
+				
+				double z =substance.calculateCompresibilityFactor();
+				double volume = substance.calculateMolarVolume();
 				double vr = volume/criticalVolume;
 				writer.println(" " + reducedPressure + " " + z + " " + reducedTemperature + " " + vr);
 			}

@@ -5,11 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import termo.component.Compound;
 import termo.eos.Cubic;
 import termo.eos.EquationsOfState;
+import termo.eos.alpha.Alphas;
+import termo.matter.Mixture;
+import termo.matter.Substance;
 import termo.phase.Phase;
 
+import compounds.CompoundReader;
+
 public class CubicFileGenerator extends FileGenerator {
+	Substance substance;
+	public CubicFileGenerator(){
+		CompoundReader reader = new CompoundReader();
+		Compound heptane = reader.getCompoundByExactName("N-heptane");
+		substance = new Substance(EquationsOfState.vanDerWaals()
+				,Alphas.getVanDerWaalsIndependent()
+				,heptane,Phase.VAPOR);
+	}
 
 	public void cubicEquationPressureVolumeTemperatureFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException{		
 		PrintWriter writer = new PrintWriter(fileName, "UTF-8");
@@ -42,10 +56,12 @@ public class CubicFileGenerator extends FileGenerator {
 		writer.close();			
 	}
 	public double calculatePressure(double volume, double temperature){
+		
+		return substance.calculatePressure(temperature,volume);
 		//parametros de van der waals para el heptano
-		double a = 3107000.0;
-		double b = 0.2049;
-		return cubic.calculatePressure(temperature, volume,a,b);
+	//	double a = 3107000.0;
+		//double b = 0.2049;
+//		return cubic.calculatePressure(temperature, volume,a,b);
 	}
 	
 	public void cubicEquationPressureVolumeFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException{
@@ -95,10 +111,13 @@ public void cubicEquationCompresibilitiFactorFiles(String folderName) throws Fil
 			for(double reducedPressure = min_reducedPressure ; reducedPressure <= max_reducedPressure; reducedPressure+= pressurepass){	
 				double temperature = criticalTemperature * reducedTemperature;
 				double pressure = criticalPressure * reducedPressure;
-				double A =cubic.get_A(temperature, pressure, a);
-				double B = cubic.get_B(temperature, pressure, b);
+//				double A =cubic.get_A(temperature, pressure, a);
+//				double B = cubic.get_B(temperature, pressure, b);
 				
-				double z =cubic.calculateCompresibilityFactor(A, B, Phase.LIQUID);
+				substance.setPressure(pressure);
+				substance.setTemperature(temperature);
+				double z = substance.calculateCompresibilityFactor();
+				//double z =cubic.calculateCompresibilityFactor(A, B, Phase.LIQUID);
 				writer.println(" " + reducedPressure + " " + z + " " + reducedTemperature);
 			}
 			writer.println();
