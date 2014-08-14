@@ -29,7 +29,7 @@ public class HeterogeneousFilesGenerator extends FileGenerator{
 			System.out.println("temp:" + temperature);
 			
 			substance.setTemperature(temperature);
-			substance.bubblePressure();
+			substance.saturationPressure();
 			Double pressure = substance.getPressure();
 			
 			Double liquidVolume = substance.getLiquid().calculateMolarVolume();

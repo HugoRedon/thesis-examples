@@ -53,7 +53,8 @@ public class DataFilesGenerator {
 	public void generateTernaryDiagramsChapterDataFiles() throws IOException{
 		TernaryDiagram ternary = new TernaryDiagram();
 		
-		ternary.generateTernaryDataFiles(repoPath + "plotdata/ternaryDiagram/");
+		//ternary.generateTernaryDataFiles(repoPath + "plotdata/ternaryDiagram/");
+		ternary.generateTernaryFileFromData(repoPath + "plotdata/ternaryDiagram/");
 	}
 	
 	public void generateEntropyDiagrams()throws IOException{
@@ -92,12 +93,12 @@ public class DataFilesGenerator {
 			//generator.generateEnthalpyChapterFiles();
 			//generator.generateOptimizationChapterFiles();
 			//generator.generateBinaryOptimizationChapterFiles();
-//			generator.generateTernaryDiagramsChapterDataFiles();
+			generator.generateTernaryDiagramsChapterDataFiles();
 			//generator.generateEntropyDiagrams();
 			//generator.generateGibbsDiagrams();
 			//generator.generateHeterogeneousFiles();
 			//generator.generateFugacityFiles();
-			generator.generateVolumeFiles();
+			//generator.generateVolumeFiles();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

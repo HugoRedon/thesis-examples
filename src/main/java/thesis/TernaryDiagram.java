@@ -61,6 +61,31 @@ public class TernaryDiagram extends FileGenerator {
 		return list;
 	}
 	
+	public void generateTernaryFileFromData(String foldername)throws IOException{
+		prepareFolder(foldername);
+		List<Double[]> fractions = readTernaryData();
+		double temperature = 45 + 273.15;
+		
+		PrintWriter writer = new PrintWriter(foldername + "acetonemethanolcyclohexaneVL45.dat");
+		writer.println(" x1 x2 x3");
+		for(Double[] frac:fractions){
+			double x1 = frac[0];
+			double x2 = frac[1];
+			double x3 = frac[2];
+			writer.println(" " +x1+ " " + x2 + " " + x3 );
+		}
+		writer.close();
+		
+	}
+	
+	public void ethanolwateroctane(String folderName)throws IOException{
+		prepareFolder(folderName);
+		PrintWriter writer = new PrintWriter("ethanolwateroctane.dat");
+		
+		
+		writer.close();
+	}
+	
 	public void generateTernaryDataFiles(String folderPath) throws IOException{
 //		prepareFolder(folderPath);
 //		

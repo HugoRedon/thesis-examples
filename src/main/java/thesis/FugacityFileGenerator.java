@@ -9,6 +9,8 @@ import termo.eos.EquationsOfState;
 import termo.eos.alpha.Alpha;
 import termo.eos.alpha.Alphas;
 import termo.matter.HeterogeneousSubstance;
+import termo.matter.Mixture;
+import termo.matter.Substance;
 
 import compounds.CompoundReader;
 
@@ -87,5 +89,5 @@ public class FugacityFileGenerator extends FileGenerator{
 				writer.println(" " + liquidFug + " " + vaporFug + " " + temperature + " " + pressure);
 			}
 			
-		}
+		}		
 }
