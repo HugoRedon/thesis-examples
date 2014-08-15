@@ -9,8 +9,7 @@ import java.util.Set;
 import termo.component.Compound;
 import termo.data.ExperimentalData;
 import termo.data.ExperimentalDataList;
-import termo.eos.Cubic;
-import termo.eos.alpha.Alpha;
+import termo.eos.alpha.AlphaParameter;
 import termo.eos.alpha.Alphas;
 import termo.matter.HeterogeneousSubstance;
 import termo.optimization.ErrorData;
@@ -121,7 +120,38 @@ public class OptimizationFileGenerator extends FileGenerator{
 		
 	}
 
+	public void foo(){
+		double temperature=0;
+		double pressure=0;
+		HeterogeneousSubstance heterogeneousSubstance=null;
+		ExperimentalDataList datalist = new ExperimentalDataList();
+		datalist.setName("Nombre de la lista");
+		datalist.setSource("Origen de los datos ejem. DIPPR versión web");
+		datalist.addExperimentalData(temperature, pressure);
+		heterogeneousSubstance.getErrorFunction().setExperimental(datalist);
+		
+		heterogeneousSubstance.getErrorFunction().getOptimizer().setApplyErrorDecreaseTechnique(true);
+		heterogeneousSubstance.getErrorFunction().minimize();
 	
+		for(AlphaParameter parameter: heterogeneousSubstance.alphaParameters()){
+			double value = parameter.getValue();
+			String name = parameter.getName();
+		}
+		Compound compound = heterogeneousSubstance.getComponent();
+		compound.getA_Soave();
+		compound.getB_Soave();
+		
+		List<Parameters_Error> convergenceHistory = 
+				heterogeneousSubstance.getErrorFunction().getOptimizer().getConvergenceHistory();
+		
+		for(Parameters_Error paramError:convergenceHistory){
+			int iteration = paramError.getIteration();
+			double[] params = paramError.getParameters();
+			double error=paramError.getError();
+			
+		}
+		
+	}
 	
 	
 }

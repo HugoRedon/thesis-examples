@@ -91,9 +91,9 @@ public class DataFilesGenerator {
 			
 			//generator.generateCubicChapterFiles();
 			//generator.generateEnthalpyChapterFiles();
-			//generator.generateOptimizationChapterFiles();
+			generator.generateOptimizationChapterFiles();
 			//generator.generateBinaryOptimizationChapterFiles();
-			generator.generateTernaryDiagramsChapterDataFiles();
+			//generator.generateTernaryDiagramsChapterDataFiles();
 			//generator.generateEntropyDiagrams();
 			//generator.generateGibbsDiagrams();
 			//generator.generateHeterogeneousFiles();
