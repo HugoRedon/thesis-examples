@@ -148,7 +148,6 @@ public class OptimizationFileGenerator extends FileGenerator{
 			int iteration = paramError.getIteration();
 			double[] params = paramError.getParameters();
 			double error=paramError.getError();
-			
 		}
 		
 	}

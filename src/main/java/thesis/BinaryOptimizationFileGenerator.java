@@ -38,8 +38,8 @@ import compounds.CompoundReader;
 public class BinaryOptimizationFileGenerator extends FileGenerator {
 	
 	public void generateFiles(String folderName) throws IOException{
-		//methanolWaterFiles(folderName+ "methanolWater/");
-		carbonDioxideMethanolFiles(folderName+"co2Met/");
+		methanolWaterFiles(folderName+ "methanolWater/");
+		//carbonDioxideMethanolFiles(folderName+"co2Met/");
 	}
 	
 	public ExperimentalDataBinaryList getBinaryExperimentalListFromFilePxy(String filePath) throws IOException{
@@ -232,10 +232,31 @@ public class BinaryOptimizationFileGenerator extends FileGenerator {
 		
 		mix.getErrorfunction().getOptimizer().setApplyErrorDecreaseTechnique(true);
 		mix.getErrorfunction().minimize();
+		double kij = mix.getErrorfunction().getParameter(0);
+		System.out.println("kij binario: " + kij);
 		generateBinaryTemperatureDiagramDataInFile(mix,folderName, "errorAfterOptim.dat");
 		
 	}
 	
+	public void foo(){
+		HeterogeneousMixture heterogeneousMixture = null;
+		Compound referenceCompound = null;
+		Compound nonReferenceCompound=null;
+		double temperature =0, pressure=0 ,x =0,y =0;
+		
+		ExperimentalDataBinaryList blist = new ExperimentalDataBinaryList("Lista para ejemplo");
+		blist.setSource("Fuente de los datos");
+		blist.setType(ExperimentalDataBinaryType.isobaric);
+		
+		blist.setReferenceComponent(referenceCompound);
+		blist.setNonReferenceComponent(nonReferenceCompound);
+		blist.addExperimentalDataToList(temperature, pressure, x, y);
+		
+		heterogeneousMixture.getErrorfunction().setExperimental(blist);
+		
+		heterogeneousMixture.getErrorfunction().minimize();
+		
+	}
 	
 
 
